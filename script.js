@@ -1,3 +1,10 @@
+// 전역 스코프에서 start 함수 정의
+function start() {
+    $(".start").hide();
+    $(".question").show();
+    displayQuestion();
+}
+
 $(document).ready(function() {
     var num = 1;
     var q = {
@@ -12,12 +19,6 @@ $(document).ready(function() {
     };
     var scores = {"EI": 0, "SN": 0, "TF": 0, "JP": 0};
 
-    function start() {
-        $(".start").hide();
-        $(".question").show();
-        displayQuestion();
-    }
-
     function displayQuestion() {
         var currentQ = q[num];
         $("#title").text(currentQ.question);
@@ -26,22 +27,23 @@ $(document).ready(function() {
         $("#type").val(currentQ.type);
     }
 
-$("#A, #B").click(function () {
-    var type = $("#type").val();
-    scores[type] += (this.id === "A" ? 1 : -1); // 'A' 선택 시 +1, 'B' 선택 시 -1
-    num++;
-    if (num > Object.keys(q).length) {
-        calculateMBTI();
-    } else {
-        displayQuestion();
+    $("#A, #B").click(function () {
+        var type = $("#type").val();
+        scores[type] += (this.id === "A" ? 1 : -1);
+        num++;
+        if (num > Object.keys(q).length) {
+            calculateMBTI();
+        } else {
+            displayQuestion();
+        }
+    });
+
+    function calculateMBTI() {
+        var mbtiType = "";
+        mbtiType += (scores["EI"] > 0) ? "E" : "I";
+        mbtiType += (scores["SN"] > 0) ? "S" : "N";
+        mbtiType += (scores["TF"] > 0) ? "T" : "F";
+        mbtiType += (scores["JP"] > 0) ? "J" : "P";
+        window.location.href = "result/" + mbtiType + ".html";
     }
 });
-
-function calculateMBTI() {
-    var mbtiType = "";
-    mbtiType += (scores["EI"] > 0) ? "E" : "I"; // 점수가 0보다 크면 'E', 아니면 'I'
-    mbtiType += (scores["SN"] > 0) ? "S" : "N"; // 점수가 0보다 크면 'S', 아니면 'N'
-    mbtiType += (scores["TF"] > 0) ? "T" : "F"; // 점수가 0보다 크면 'T', 아니면 'F'
-    mbtiType += (scores["JP"] > 0) ? "J" : "P"; // 점수가 0보다 크면 'J', 아니면 'P'
-    window.location.href = "result/" + mbtiType + ".html";
-}
