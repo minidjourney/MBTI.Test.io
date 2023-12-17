@@ -28,7 +28,11 @@ $(document).ready(function() {
 
     $("#A, #B").click(function () {
         var type = $("#type").val();
-        scores[type] += (this.id === "A" ? 1 : 0);
+        if (this.id === "A") {
+            scores[type] += 1; // 'A' 선택 시 점수 증가
+        } else {
+            scores[type] -= 1; // 'B' 선택 시 점수 감소
+        }
         num++;
         if (num > Object.keys(q).length) {
             calculateMBTI();
@@ -36,15 +40,13 @@ $(document).ready(function() {
             displayQuestion();
         }
     });
-
+    
     function calculateMBTI() {
         var mbtiType = "";
-        mbtiType += (scores["EI"] > 1) ? "E" : "I";
-        mbtiType += (scores["SN"] > 1) ? "S" : "N";
-        mbtiType += (scores["TF"] > 1) ? "T" : "F";
-        mbtiType += (scores["JP"] > 1) ? "J" : "P";
+        mbtiType += (scores["EI"] >= 0) ? "E" : "I";
+        mbtiType += (scores["SN"] >= 0) ? "S" : "N";
+        mbtiType += (scores["TF"] >= 0) ? "T" : "F";
+        mbtiType += (scores["JP"] >= 0) ? "J" : "P";
         window.location.href = "result/" + mbtiType + ".html";
     }
-
-    window.start = start;
-});
+    
