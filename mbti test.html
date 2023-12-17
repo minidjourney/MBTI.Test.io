@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>MBTI 테스트</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="start">
+            <h1>MBTI 테스트 시작하기</h1>
+            <button onclick="start()">테스트 시작</button>
+        </div>
+        <div class="question" style="display: none;">
+            <h2 id="title"></h2>
+            <button id="A"></button>
+            <button id="B"></button>
+            <input type="hidden" id="EI" value="0">
+            <input type="hidden" id="SN" value="0">
+            <input type="hidden" id="TF" value="0">
+            <input type="hidden" id="JP" value="0">
+        </div>
+    </div>
+</body>
+</html>
