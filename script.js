@@ -1,3 +1,4 @@
+// 전역 스코프에서 start 함수 정의
 function start() {
     $(".start").hide();
     $(".question").show();
@@ -19,8 +20,7 @@ $(document).ready(function() {
         10: {"type": "JP", "question": "계획보다는 즉흥적인 행동을 선호하나요?", "A": "예", "B": "아니오"},
         11: {"type": "JP", "question": "목표를 달성하기 위해 체계적인 계획을 세우는 것을 좋아하나요?", "A": "아니오", "B": "예"},
         12: {"type": "JP", "question": "일정과 계획을 미리 세우는 것이 안정감을 준다고 느끼나요?", "A": "예", "B": "아니오"}
-    };
-
+      };
     var scores = {"EI": 0, "SN": 0, "TF": 0, "JP": 0};
 
     function displayQuestion() {
@@ -49,6 +49,4 @@ $(document).ready(function() {
         mbtiType += (scores["JP"] >= 2) ? "J" : "P";
         window.location.href = "result/" + mbtiType + ".html";
     }
-
-    window.start = start;
 });
