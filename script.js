@@ -19,29 +19,29 @@ $(document).ready(function() {
         10: {"type": "JP", "question": "계획보다는 즉흥적인 행동을 선호하나요?", "A": "예", "B": "아니오"},
         11: {"type": "JP", "question": "목표를 달성하기 위해 체계적인 계획을 세우는 것을 좋아하나요?", "A": "아니오", "B": "예"},
         12: {"type": "JP", "question": "일정과 계획을 미리 세우는 것이 안정감을 준다고 느끼나요?", "A": "예", "B": "아니오"}
-        };
+    };
     var scores = {"EI": 0, "SN": 0, "TF": 0, "JP": 0};
 
     function displayQuestion() {
         var currentQ = q[num];
         $("#title").text(currentQ.question);
-        $("#A").text(currentQ.A).data("type", currentQ.type);
-        $("#B").text(currentQ.B).data("type", currentQ.type);
-    }
+        $("#A").text(currentQ.A);
+        $("#B").text(currentQ.B);
 
-    // 이벤트 위임을 사용하여 동적으로 생성된 요소에도 이벤트 핸들러 적용
-    $(".question").on("click", "#A, #B", function () {
-        var type = $(this).data("type");
-        scores[type] += (this.id === "A" ? 1 : 0);
-        num++;
-        if (num > Object.keys(q).length) {
-            calculateMBTI();
-        } else {
-            displayQuestion();
-        }
-        // 히든 요소에 점수 업데이트
-        $("#" + type).val(scores[type]);
-    });
+        // 이벤트 핸들러 재설정
+        $("#A, #B").off("click").click(function() {
+            var type = currentQ.type;
+            scores[type] += (this.id === "A" ? 1 : 0);
+            num++;
+            if (num > Object.keys(q).length) {
+                calculateMBTI();
+            } else {
+                displayQuestion();
+            }
+            // 히든 필드 값 업데이트
+            $("#" + type).val(scores[type]);
+        });
+    }
 
     function calculateMBTI() {
         var mbtiType = "";
