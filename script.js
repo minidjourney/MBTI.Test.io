@@ -1,6 +1,3 @@
-// 전역 변수로 현재 질문 유형을 저장
-var currentType = "";
-
 function start() {
     $(".start").hide();
     $(".question").show();
@@ -17,13 +14,13 @@ $(document).ready(function() {
     function displayQuestion() {
         var currentQ = q[num];
         $("#title").text(currentQ.question);
-        $("#A").text(currentQ.A);
-        $("#B").text(currentQ.B);
-        currentType = currentQ.type; // 현재 질문 유형 저장
+        $("#A").text(currentQ.A).data("type", currentQ.type);
+        $("#B").text(currentQ.B).data("type", currentQ.type);
     }
 
     $("#A, #B").click(function () {
-        scores[currentType] += (this.id === "A" ? 1 : 0);
+        var type = $(this).data("type");
+        scores[type] += (this.id === "A" ? 1 : 0);
         num++;
         if (num > Object.keys(q).length) {
             calculateMBTI();
