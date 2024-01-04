@@ -34,14 +34,16 @@ $(document).ready(function() {
     }
 
     $("#A, #B").click(function () {
-        var type = $("#type").val();
-        scores[type] += (this.id === "A" ? 1 : 0); // 'A' 선택 시 점수 증가, 'B' 선택 시 변화 없음
-        num++;
-        if (num > Object.keys(q).length) {
-            calculateMBTI();
-        } else {
-            displayQuestion();
-        }
+    var type = $("#type").val();
+    scores[type] += (this.id === "A" ? 1 : 0);
+    num++;
+    if (num > Object.keys(q).length) {
+        calculateMBTI();
+    } else {
+        displayQuestion();
+    }
+    // HTML input 태그에 점수 업데이트
+    $("#" + type).val(scores[type]);
     });
 
     function calculateMBTI() {
