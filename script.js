@@ -1,10 +1,10 @@
 function start() {
-    $(".start").hide();
-    $(".question").show();
+    document.querySelector(".start").style.display = 'none';
+    document.querySelector(".question").style.display = 'block';
     displayQuestion();
 }
 
-$(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function() {
     var num = 1;
     var q = {
         // ... (질문 객체는 동일하게 유지)
@@ -13,21 +13,25 @@ $(document).ready(function() {
 
     function displayQuestion() {
         var currentQ = q[num];
-        $("#title").text(currentQ.question);
-        $("#A").text(currentQ.A).data("type", currentQ.type);
-        $("#B").text(currentQ.B).data("type", currentQ.type);
+        document.getElementById("title").textContent = currentQ.question;
+        var buttonA = document.getElementById("A");
+        var buttonB = document.getElementById("B");
+        buttonA.textContent = currentQ.A;
+        buttonB.textContent = currentQ.B;
+
+        buttonA.onclick = function() { answerQuestion(currentQ.type, 'A'); };
+        buttonB.onclick = function() { answerQuestion(currentQ.type, 'B'); };
     }
 
-    $("#A, #B").click(function () {
-        var type = $(this).data("type");
-        scores[type] += (this.id === "A" ? 1 : 0);
+    function answerQuestion(type, answer) {
+        scores[type] += (answer === 'A' ? 1 : 0);
         num++;
         if (num > Object.keys(q).length) {
             calculateMBTI();
         } else {
             displayQuestion();
         }
-    });
+    }
 
     function calculateMBTI() {
         var mbtiType = "";
